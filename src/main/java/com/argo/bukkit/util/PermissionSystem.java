@@ -59,28 +59,14 @@ public class PermissionSystem {
 	
 	private final JavaPlugin plugin;
 	private final Logger log;
-	private final String logPrefix;
 	private Type systemInUse;
 	
     private net.milkbowl.vault.permission.Permission vaultPermission = null;
     private PermissionsResolverManager wepifPerms = null;
     
-	public PermissionSystem(JavaPlugin plugin, Logger log, String logPrefix) {
+	public PermissionSystem(JavaPlugin plugin, Logger log) {
 		this.plugin = plugin;
-		if( log != null )
-			this.log = log;
-		else
-			this.log = Logger.getLogger(PermissionSystem.class.toString());
-		
-		if( logPrefix != null ) {
-			if( logPrefix.endsWith(" ") )
-				this.logPrefix = logPrefix;
-			else
-				this.logPrefix = logPrefix + " ";
-		}
-		else
-			this.logPrefix = "["+plugin.getDescription().getName()+"] ";
-		
+		this.log = log;
 		instance = this;
 	}
 	
@@ -175,7 +161,7 @@ public class PermissionSystem {
 		}
 		
 		if( verbose )
-			log.info(logPrefix+"using "+getSystemInUseString()+" for permissions");
+			log.info("Using "+getSystemInUseString()+" for permissions");
 	}
 	
     /** Check to see if player has a given permission.
@@ -368,7 +354,7 @@ public class PermissionSystem {
 	    	
 //	    	System.out.println("WorldEdit version: "+version+", number="+versionNumber);
 	    	if( versionNumber < 660 ) {
-	    		log.info(logPrefix + "You are currently running version "+version+" of WorldEdit. WEPIF was changed in #660, please update to latest WorldEdit. (skipping WEPIF for permissions)");
+	    		log.info("You are currently running version "+version+" of WorldEdit. WEPIF was changed in #660, please update to latest WorldEdit. (skipping WEPIF for permissions)");
 	    		return false;
 	    	}
 
@@ -380,7 +366,7 @@ public class PermissionSystem {
 	    	}
     	}
     	catch(Exception e) {
-    		log.info(logPrefix + " Unexpected error trying to setup WEPIF permissions hooks (this message can be ignored): "+e.getMessage());
+    		log.info("Unexpected error trying to setup WEPIF permissions hooks (this message can be ignored): "+e.getMessage());
     	}
     	
     	return wepifPerms != null;

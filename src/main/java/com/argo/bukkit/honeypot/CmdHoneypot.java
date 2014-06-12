@@ -25,12 +25,12 @@ public class CmdHoneypot implements CommandExecutor {
         if(args.length == 0) {
             if(sender instanceof Player) {
                 Player player = (Player)sender;
-                if(Honeyfarm.getPotSelect(player)) {
+                if(plugin.farm.getPotSelect(player)) {
                     player.sendMessage(ChatColor.GREEN + "Honeypot creation finished.");
-                    Honeyfarm.setPotSelect(player, false);
+                    plugin.farm.setPotSelect(player, false);
                 } else {
                     player.sendMessage(ChatColor.GREEN + "Right click a block with a " + plugin.getHPConfig().getToolId() + " to create a honeypot. When finished, use /hp again.");
-                    Honeyfarm.setPotSelect(player, true);
+                    plugin.farm.setPotSelect(player, true);
                 }
             } else {
                 sender.sendMessage("Sorry, this command can only be used by players.");
@@ -48,7 +48,7 @@ public class CmdHoneypot implements CommandExecutor {
             }
             else if(args[0].equalsIgnoreCase("save") || args[0].equalsIgnoreCase("s")) {
                 sender.sendMessage(ChatColor.GREEN + "Saving honeypot data...");
-                if(!Honeyfarm.saveData()) {
+                if(!plugin.farm.saveData()) {
                     sender.sendMessage(ChatColor.DARK_RED + "Failed to save data.");
                 }
             }
@@ -56,7 +56,7 @@ public class CmdHoneypot implements CommandExecutor {
             else if(args[0].equalsIgnoreCase("reload") || args[0].equalsIgnoreCase("r")) {
                 sender.sendMessage(ChatColor.GREEN + "Reloading honeypot data from saved file...");
 
-                if(!Honeyfarm.refreshData()) {
+                if(!plugin.farm.refreshData()) {
                     sender.sendMessage(ChatColor.DARK_RED + "Failed to load data.");
                 }
             }

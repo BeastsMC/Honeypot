@@ -16,9 +16,9 @@ import com.sk89q.worldedit.regions.Region;
  *
  */
 public class WorldEditIntegration {
-	private final Plugin plugin;
+	private final Honeypot plugin;
 
-	public WorldEditIntegration(Plugin plugin) {
+	public WorldEditIntegration(Honeypot plugin) {
 		this.plugin = plugin;
 	}
 
@@ -35,8 +35,8 @@ public class WorldEditIntegration {
             try {
                 Region region = worldEdit.getSession(player).getSelection(worldEdit.getSession(player).getSelectionWorld());
                 CuboidRegion cuboidRegion = new CuboidRegion(region, player.getWorld());
-                Honeyfarm.createPot(cuboidRegion);
-                Honeyfarm.saveData();
+                plugin.farm.createPot(cuboidRegion);
+                plugin.farm.saveData();
                 player.sendMessage(ChatColor.DARK_RED+"WorldEdit region recorded as a Honeypot");
             }
             catch(IncompleteRegionException ire) {

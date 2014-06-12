@@ -8,21 +8,16 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.argo.bukkit.honeypot.Honeypot;
-
 /**
  * @author morganm
  *
  */
-public class YMLFile implements Config {
-	private static final Logger log = Honeypot.log;
-	
+public class YMLFile implements Config {	
 	private JavaPlugin plugin;
 	private FileConfiguration bukkitConfig;
 	private Map<Integer, Integer> pointKeyMap;
@@ -164,7 +159,7 @@ public class YMLFile implements Config {
 					// even though we can read the integer here, the call below to "getInt()" will fail since
 					// Bukkit requires the key value be a string, so print a nice error message to the
 					// admin to tell them to fix their config file.
-					log.warning("Found raw integer key value offensePointMap."+o+", you must wrap the integer in quotes in order for it to work properly, like so: \""+o+"\"");
+					plugin.getLogger().warning("Found raw integer key value offensePointMap."+o+", you must wrap the integer in quotes in order for it to work properly, like so: \""+o+"\"");
 					continue;
 				}
 				else if( o instanceof String ) {
@@ -172,7 +167,7 @@ public class YMLFile implements Config {
 						keyInt = Integer.valueOf((String) o);
 					}
 					catch(NumberFormatException e) {
-						log.warning("[Honeypot] invalid key value "+o+" in offensePointMap: value must be an integer");
+						plugin.getLogger().warning("Invalid key value "+o+" in offensePointMap: value must be an integer");
 					}
 				}
 

@@ -1,13 +1,9 @@
-/**
- * 
- */
 package com.argo.bukkit.honeypot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
-import java.util.logging.Logger;
 
 import org.bukkit.Location;
 import org.bukkit.block.BlockState;
@@ -21,7 +17,6 @@ import org.bukkit.block.BlockState;
  *
  */
 public class HoneyStack implements Runnable {
-	private static final Logger log = Honeypot.log;
 	
 	// keeps track of the total honeypot points this player has accumulated.  These
 	// are NOT the kind of points you want to be winning.  :P
@@ -31,6 +26,11 @@ public class HoneyStack implements Runnable {
 	private HashMap<Location, BlockState> honeyBlocks = new HashMap<Location, BlockState>();
 	private HashMap<String, Long> playerLogouts = new HashMap<String, Long>();
 	
+	private final Honeypot plugin;
+	
+	public HoneyStack(Honeypot plugin) {
+		this.plugin = plugin;
+	}
 	public Integer getHoneyPoints(String playerName) {
 		return honeypotPoints.get(playerName);
 	}
@@ -89,10 +89,10 @@ public class HoneyStack implements Runnable {
 			try {
 				BlockState bs = honeyBlocks.get(location);
 				bs.update(true);
-				log.info("[Honeypot] successfully rolled back Honeypot damage from player "+playerName+" at location "+Honeypot.prettyPrintLocation(location));
+				plugin.getLogger().info("Successfully rolled back Honeypot damage from player "+playerName+" at location "+Honeypot.prettyPrintLocation(location));
 			}
 			catch(Exception e) {
-				log.warning("[Honeypot] error rolling back Honeypot block at location "+Honeypot.prettyPrintLocation(location));
+				plugin.getLogger().warning("Error rolling back Honeypot block at location "+Honeypot.prettyPrintLocation(location));
 				e.printStackTrace();
 			}
 		}
@@ -108,7 +108,7 @@ public class HoneyStack implements Runnable {
 				//Disregard logging, unimportant since placement is not a penalized action.
 			}
 			catch(Exception e) {
-				log.warning("[Honeypot] error rolling back Honeypot block at location "+Honeypot.prettyPrintLocation(location));
+				plugin.getLogger().warning("Error rolling back Honeypot block at location "+Honeypot.prettyPrintLocation(location));
 				e.printStackTrace();
 			}
 		}
